@@ -655,6 +655,7 @@ private[offline] object SourceUtils {
   def loadObservationAsDF(ss: SparkSession, conf: Configuration, inputData: InputData, failOnMissing: Boolean = true): DataFrame = {
     // TODO: Split isLocal case into Test Packages
     val format = FileFormat.getType(inputData.inputPath)
+    log.info(s"loading ${inputData.inputPath} input Path as Format: ${format}")
     format match {
       case FileFormat.PATHLIST => {
         val pathList = getPathList(inputData.sourceType, inputData.inputPath, ss, inputData.dateParam, None, failOnMissing)
@@ -672,7 +673,7 @@ private[offline] object SourceUtils {
         JDBCUtils.loadDataFrame(ss, inputData.inputPath)
       }
       case FileFormat.CSV => {
-        FileFormat.loadDataFrame(ss, inputData.inputPath)
+        ss.read.format("csv").option("header", "true").load(inputData.inputPath)
       }
       case _ => {
         if (ss.sparkContext.isLocal){

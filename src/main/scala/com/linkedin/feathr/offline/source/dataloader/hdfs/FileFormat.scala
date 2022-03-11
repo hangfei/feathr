@@ -31,11 +31,11 @@ object FileFormat {
   def getType(path: String): String = {
     val p = path.toLowerCase()
     p match {
-      case p if p.startsWith("jdbc") => JDBC
       case p if p.endsWith(".csv") => CSV
       case p if p.endsWith(".parquet") => PARQUET
       case p if p.endsWith(".orc") => ORC
       case p if p.endsWith(".avro.json") => AVRO_JSON
+      case p if p.startsWith("jdbc") => JDBC
       case _ => PATHLIST}
   }
 
