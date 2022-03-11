@@ -35,7 +35,7 @@ object FileFormat {
       case p if p.endsWith(".parquet") => PARQUET
       case p if p.endsWith(".orc") => ORC
       case p if p.endsWith(".avro.json") => AVRO_JSON
-      case p if p.startsWith("jdbc") => JDBC
+      case p if p.startsWith("jdbc:") => JDBC
       case _ => PATHLIST}
   }
 
